@@ -1,17 +1,13 @@
-# ── General ──────────────────────────────────────────────
 add_newline = true
 
 format = """
 $directory$git_branch$git_status$fill$time
 $character"""
 
-# ── Directory ────────────────────────────────────────────
 [directory]
 style = "bold blue"
 truncation_length = 3
-truncate_to_repo = true
 
-# ── Git ──────────────────────────────────────────────────
 [git_branch]
 symbol = " "
 style = "purple"
@@ -19,24 +15,20 @@ format = "[$symbol$branch]($style) "
 
 [git_status]
 style = "yellow"
-format = '([$all_status$ahead_behind]($style) )'
-ahead = "⇡${count}"
-behind = "⇣${count}"
+format = '([$modified$untracked]($style) )'
 modified = "!${count}"
 untracked = "?${count}"
-staged = "+${count}"
 
-# ── Right side ───────────────────────────────────────────
 [fill]
-symbol = " "
+symbol = "·"
+style = "dimmed blue"
 
 [time]
 disabled = false
-style = "dimmed white"
 format = "[$time]($style)"
 time_format = "%H:%M"
+style = "dimmed white"
 
-# ── Prompt character ─────────────────────────────────────
 [character]
 success_symbol = "[❯](bold green)"
 error_symbol = "[❯](bold red)"
