@@ -15,3 +15,7 @@ function cat  { bat $args }
 function ls   { eza --icons $args }
 function ll   { eza -la --icons $args }
 function grep { rg $args }
+function .. { cd .. }
+function ... { cd ../.. }
+function profile { code $PROFILE }
+function starshiprc { code $env:USERPROFILE\.config\starship.toml }
