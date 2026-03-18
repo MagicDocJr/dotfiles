@@ -1,7 +1,7 @@
 add_newline = true
 
 format = """
-$directory$git_branch$git_status$fill$time
+$os$directory$git_branch$git_status$fill$time
 $character"""
 
 [directory]
@@ -32,3 +32,10 @@ style = "dimmed white"
 [character]
 success_symbol = "[❯](bold green)"
 error_symbol = "[❯](bold red)"
+
+[os]
+disabled = false
+
+[os.symbols]
+Windows = ""
+Ubuntu = "🐧 "
