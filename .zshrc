@@ -1,13 +1,25 @@
-autoload -Uz compinit && compinit -ieval "$(starship init zsh)"
-zstyle ":completion:*:*:docker:*" option-stacking yes
+# ── Oh My Zsh ────────────────────────────────────────────
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME=""
+
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  zsh-you-should-use
+  fzf
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# ── Prompt ───────────────────────────────────────────────
+eval "$(starship init zsh)"
+
 # ── Aliases ──────────────────────────────────────────────
 alias ls='eza --icons'
 alias ll='eza -la --icons'
-alias cat='bat'
+alias cat='batcat'
 alias grep='rg'
-
-# ── Autocomplete ─────────────────────────────────────────
-autoload -Uz compinit && compinit -i
 
 # ── History ──────────────────────────────────────────────
 HISTSIZE=10000
