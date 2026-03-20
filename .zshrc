@@ -8,6 +8,8 @@ plugins=(
   zsh-syntax-highlighting
   zsh-you-should-use
   fzf
+  zsh-defer
+  zsh-abbr
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -20,14 +22,26 @@ alias ls='eza --icons'
 alias ll='eza -la --icons'
 alias cat='batcat'
 alias grep='rg'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias zshrc='code ~/.zshrc'
-alias starshiprc='code ~/.config/starship.toml'
+alias rld='source ~/.zshrc'
+
+alias y='yazi'
+alias zshrc='nano ~/.zshrc'
+alias starshiprc='nano ~/.config/starship.toml'
+
+# ── Editor ───────────────────────────────────────────────
+export EDITOR='nano'
+
 # ── History ──────────────────────────────────────────────
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 setopt share_history
 setopt hist_ignore_dups
+
+# ── Tools ────────────────────────────────────────────────
 eval "$(zoxide init zsh)"
+export PATH=$PATH:/snap/bin
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
