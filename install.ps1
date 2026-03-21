@@ -1,3 +1,11 @@
+# ── PowerShell 7 ──────────────────────────────────────────
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+    Write-Host "Installing PowerShell 7..." -ForegroundColor Cyan
+    winget install Microsoft.PowerShell
+} else {
+    Write-Host "PowerShell 7 already installed, skipping." -ForegroundColor Green
+}
+
 # ── Package manager ───────────────────────────────────────
 if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host "Installing Scoop..." -ForegroundColor Cyan
