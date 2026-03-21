@@ -8,8 +8,6 @@ plugins=(
   zsh-syntax-highlighting
   zsh-you-should-use
   fzf
-  zsh-defer
-  zsh-abbr
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -29,7 +27,7 @@ alias zshrc='nano ~/.zshrc'
 alias starshiprc='nano ~/.config/starship.toml'
 
 # ── Editor ───────────────────────────────────────────────
-export EDITOR='nano'
+export EDITOR='helix'
 
 # ── History ──────────────────────────────────────────────
 HISTSIZE=10000
