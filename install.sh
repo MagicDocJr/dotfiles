@@ -26,12 +26,13 @@ git clone https://github.com/olets/zsh-abbr ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/p
 
 # ── Starship ─────────────────────────────────────────────
 echo "Installing Starship..."
-curl -sS https://starship.rs/install.sh | sh
+curl -sS https://starship.rs/install.sh | sh -s -- --yes
 
 # ── NVM ──────────────────────────────────────────────────
 echo "Installing nvm..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-source ~/.zshrc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install --lts
 
 # ── Symlinks ─────────────────────────────────────────────
@@ -41,6 +42,9 @@ ln -sf ~/dotfiles/.zshrc ~/.zshrc
 ln -sf ~/dotfiles/starship.toml ~/.config/starship.toml
 
 # ── Set zsh as default ───────────────────────────────────
+echo "Setting zsh as default shell..."
 chsh -s $(which zsh)
 
+echo ""
 echo "Done! Restart your terminal."
+echo "Note: zsh-abbr may show a dependency warning on first launch — this resolves itself after a reload."
