@@ -21,7 +21,7 @@ alias ll='eza -la --icons'
 alias cat='batcat'
 alias grep='rg'
 alias rld='source ~/.zshrc'
-
+alias hx='helix'
 alias y='yazi'
 alias zshrc='nano ~/.zshrc'
 alias starshiprc='nano ~/.config/starship.toml'
