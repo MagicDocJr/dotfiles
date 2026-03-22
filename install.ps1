@@ -26,7 +26,7 @@ scoop install starship bat eza ripgrep tldr yazi fastfetch glow
 Write-Host "Installing PowerShell modules..." -ForegroundColor Cyan
 Install-Module -Name Terminal-Icons -Repository PSGallery -Force -Scope CurrentUser
 Install-Module -Name ZLocation -Repository PSGallery -Force -Scope CurrentUser
-
+winget install Microsoft.PowerToys
 # ── Symlinks ──────────────────────────────────────────────
 Write-Host "Creating symlinks..." -ForegroundColor Cyan
 New-Item -ItemType Directory -Path "$HOME\Documents\PowerShell" -Force

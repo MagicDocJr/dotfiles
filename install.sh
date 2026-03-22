@@ -5,6 +5,10 @@ echo "Installing apt packages..."
 sudo apt update
 sudo apt install -y zsh bat eza ripgrep fzf zoxide btop
 
+sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
+sudo apt update
+sudo apt install fastfetch -y.
+
 # ── Snap packages ────────────────────────────────────────
 echo "Installing snap packages..."
 sudo snap install helix --classic
