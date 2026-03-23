@@ -38,6 +38,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install --lts
+
 # ── LSP servers ──────────────────────────────────────────
 echo "Installing language servers..."
 npm install -g typescript-language-server typescript
@@ -45,6 +46,14 @@ npm install -g svelte-language-server
 npm install -g vscode-langservers-extracted
 npm install -g @angular/language-server
 npm install -g bash-language-server
+npm install -g sql-language-server
+
+# ── Helix config ─────────────────────────────────────────
+echo "Setting up Helix config..."
+mkdir -p ~/.config/helix
+ln -sf ~/dotfiles/helix-config.toml ~/.config/helix/config.toml
+ln -sf ~/dotfiles/helix-languages.toml ~/.config/helix/languages.toml
+
 # ── Symlinks ─────────────────────────────────────────────
 echo "Creating symlinks..."
 mkdir -p ~/.config
