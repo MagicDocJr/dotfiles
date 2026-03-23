@@ -1,7 +1,7 @@
 add_newline = true
 
 format = """
-$os$directory$git_branch$git_status$fill$time
+$os$directory$git_branch$git_status
 $character"""
 
 [directory]

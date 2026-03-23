@@ -23,8 +23,8 @@ alias grep='rg'
 alias rld='source ~/.zshrc'
 alias hx='helix'
 alias y='yazi'
-alias zshrc='nano ~/.zshrc'
-alias starshiprc='nano ~/.config/starship.toml'
+alias zshrc='helix ~/.zshrc'
+alias starshiprc='helix ~/.config/starship.toml'
 
 # ── Editor ───────────────────────────────────────────────
 export EDITOR='helix'
