@@ -38,12 +38,19 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install --lts
-
+# ── LSP servers ──────────────────────────────────────────
+echo "Installing language servers..."
+npm install -g typescript-language-server typescript
+npm install -g svelte-language-server
+npm install -g vscode-langservers-extracted
+npm install -g @angular/language-server
+npm install -g bash-language-server
 # ── Symlinks ─────────────────────────────────────────────
 echo "Creating symlinks..."
 mkdir -p ~/.config
 ln -sf ~/dotfiles/.zshrc ~/.zshrc
 ln -sf ~/dotfiles/starship.toml ~/.config/starship.toml
+
 
 # ── Set zsh as default ───────────────────────────────────
 echo "Setting zsh as default shell..."
