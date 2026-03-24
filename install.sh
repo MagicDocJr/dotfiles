@@ -27,7 +27,7 @@ snap list helix &>/dev/null || sudo snap install helix --classic
 snap list yazi &>/dev/null || sudo snap install yazi --classic
 snap list glow &>/dev/null || sudo snap install glow
 snap list tldr &>/dev/null || sudo snap install tldr
-
+tldr --update
 # ── Oh My Zsh ────────────────────────────────────────────
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     echo "Installing Oh My Zsh..."
