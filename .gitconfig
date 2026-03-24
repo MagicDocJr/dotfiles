@@ -1,0 +1,10 @@
+[user]
+	email = aleksdokken@gmail.com
+	name = Aleksander Dokken
+[core]
+	autocrlf = input
+	pager = delta
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
