@@ -39,6 +39,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install --lts
 
+sudo apt install git-delta -y
 # ── LSP servers ──────────────────────────────────────────
 echo "Installing language servers..."
 npm install -g typescript-language-server typescript
