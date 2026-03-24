@@ -20,20 +20,44 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
 # ── Scoop tools ───────────────────────────────────────────
 Write-Host "Installing tools..." -ForegroundColor Cyan
 scoop bucket add extras
-scoop install starship bat eza ripgrep tldr yazi fastfetch glow
+$tools = @("starship", "bat", "eza", "ripgrep", "tldr", "yazi", "fastfetch", "glow")
+foreach ($tool in $tools) {
+    if (!(scoop list $tool 2>$null | Select-String $tool)) {
+        scoop install $tool
+    } else {
+        Write-Host "$tool already installed, skipping." -ForegroundColor Green
+    }
+}
 
 # ── PowerShell modules ────────────────────────────────────
 Write-Host "Installing PowerShell modules..." -ForegroundColor Cyan
-Install-Module -Name Terminal-Icons -Repository PSGallery -Force -Scope CurrentUser
-Install-Module -Name ZLocation -Repository PSGallery -Force -Scope CurrentUser
-winget install Microsoft.PowerToys
+if (!(Get-Module -ListAvailable -Name Terminal-Icons)) {
+    Install-Module -Name Terminal-Icons -Repository PSGallery -Force -Scope CurrentUser
+} else {
+    Write-Host "Terminal-Icons already installed, skipping." -ForegroundColor Green
+}
+if (!(Get-Module -ListAvailable -Name ZLocation)) {
+    Install-Module -Name ZLocation -Repository PSGallery -Force -Scope CurrentUser
+} else {
+    Write-Host "ZLocation already installed, skipping." -ForegroundColor Green
+}
+
+# ── PowerToys ─────────────────────────────────────────────
+if (!(Get-Command powertoys -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing PowerToys..." -ForegroundColor Cyan
+    winget install Microsoft.PowerToys
+} else {
+    Write-Host "PowerToys already installed, skipping." -ForegroundColor Green
+}
+
 # ── Symlinks ──────────────────────────────────────────────
 Write-Host "Creating symlinks..." -ForegroundColor Cyan
-New-Item -ItemType Directory -Path "$HOME\Documents\PowerShell" -Force
+New-Item -ItemType Directory -Path "$HOME\Documents\PowerShell" -Force | Out-Null
+New-Item -ItemType Directory -Path "$HOME\.config" -Force | Out-Null
+
 New-Item -ItemType SymbolicLink -Force `
     -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" `
     -Target "$HOME\dotfiles\Microsoft.PowerShell_profile.ps1"
-New-Item -ItemType Directory -Path "$HOME\.config" -Force
 New-Item -ItemType SymbolicLink -Force `
     -Path "$HOME\.config\starship.toml" `
     -Target "$HOME\dotfiles\starship.toml"

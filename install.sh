@@ -1,71 +1,100 @@
 #!/bin/bash
 
+# ── Detect dotfiles location ──────────────────────────────
+if [ -d "/mnt/c/Users/$USER/dotfiles" ]; then
+    DOTFILES="/mnt/c/Users/$USER/dotfiles"
+else
+    DOTFILES="$HOME/dotfiles"
+fi
+
+echo "Using dotfiles from: $DOTFILES"
+
 # ── Apt packages ─────────────────────────────────────────
 echo "Installing apt packages..."
 sudo apt update
-sudo apt install -y zsh bat eza ripgrep fzf zoxide btop
+sudo apt install -y zsh bat eza ripgrep fzf zoxide btop git-delta
 
-sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
-sudo apt update
-sudo apt install fastfetch -y.
+# ── Fastfetch ────────────────────────────────────────────
+if ! grep -q "zhangsongcui3371" /etc/apt/sources.list.d/* 2>/dev/null; then
+    sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
+    sudo apt update
+fi
+sudo apt install fastfetch -y
 
 # ── Snap packages ────────────────────────────────────────
 echo "Installing snap packages..."
-sudo snap install helix --classic
-sudo snap install yazi --classic
-sudo snap install glow
-sudo snap install tldr
+snap list helix &>/dev/null || sudo snap install helix --classic
+snap list yazi &>/dev/null || sudo snap install yazi --classic
+snap list glow &>/dev/null || sudo snap install glow
+snap list tldr &>/dev/null || sudo snap install tldr
 
 # ── Oh My Zsh ────────────────────────────────────────────
-echo "Installing Oh My Zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+else
+    echo "Oh My Zsh already installed, skipping."
+fi
 
 # ── Oh My Zsh plugins ────────────────────────────────────
 echo "Installing zsh plugins..."
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/MichaelAquilina/zsh-you-should-use ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-you-should-use
-git clone https://github.com/romkatv/zsh-defer ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-defer
-git clone https://github.com/olets/zsh-abbr ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-abbr
+clone_if_missing() {
+    if [ ! -d "$2" ]; then
+        git clone "$1" "$2"
+    else
+        echo "Skipping $(basename $2) — already exists"
+    fi
+}
+
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+clone_if_missing https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+clone_if_missing https://github.com/MichaelAquilina/zsh-you-should-use $ZSH_CUSTOM/plugins/zsh-you-should-use
 
 # ── Starship ─────────────────────────────────────────────
-echo "Installing Starship..."
-curl -sS https://starship.rs/install.sh | sh -s -- --yes
+if ! command -v starship &>/dev/null; then
+    echo "Installing Starship..."
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+else
+    echo "Starship already installed, skipping."
+fi
 
 # ── NVM ──────────────────────────────────────────────────
-echo "Installing nvm..."
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm install --lts
+if [ ! -d "$HOME/.nvm" ]; then
+    echo "Installing nvm..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm install --lts
+else
+    echo "nvm already installed, skipping."
+fi
 
-sudo apt install git-delta -y
 # ── LSP servers ──────────────────────────────────────────
 echo "Installing language servers..."
 npm install -g typescript-language-server typescript
-npm install -g svelte-language-server
-npm install -g vscode-langservers-extracted
 npm install -g @angular/language-server
 npm install -g bash-language-server
-npm install -g sql-language-server
-
-# ── Helix config ─────────────────────────────────────────
-echo "Setting up Helix config..."
-mkdir -p ~/.config/helix
-ln -sf ~/dotfiles/helix-config.toml ~/.config/helix/config.toml
-ln -sf ~/dotfiles/helix-languages.toml ~/.config/helix/languages.toml
+npm install -g vscode-langservers-extracted
 
 # ── Symlinks ─────────────────────────────────────────────
 echo "Creating symlinks..."
 mkdir -p ~/.config
-ln -sf ~/dotfiles/.zshrc ~/.zshrc
-ln -sf ~/dotfiles/starship.toml ~/.config/starship.toml
+mkdir -p ~/.config/helix
 
+ln -sf "$DOTFILES/.zshrc" "$HOME/.zshrc"
+ln -sf "$DOTFILES/starship.toml" "$HOME/.config/starship.toml"
+[ -f "$DOTFILES/.gitconfig" ] && ln -sf "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
+[ -f "$DOTFILES/helix-config.toml" ] && ln -sf "$DOTFILES/helix-config.toml" ~/.config/helix/config.toml
+[ -f "$DOTFILES/helix-languages.toml" ] && ln -sf "$DOTFILES/helix-languages.toml" ~/.config/helix/languages.toml
 
 # ── Set zsh as default ───────────────────────────────────
-echo "Setting zsh as default shell..."
-chsh -s $(which zsh)
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "Setting zsh as default shell..."
+    chsh -s $(which zsh)
+else
+    echo "zsh already default shell, skipping."
+fi
 
 echo ""
 echo "Done! Restart your terminal."
-echo "Note: zsh-abbr may show a dependency warning on first launch — this resolves itself after a reload."
