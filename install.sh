@@ -12,7 +12,7 @@ echo "Using dotfiles from: $DOTFILES"
 # ── Apt packages ─────────────────────────────────────────
 echo "Installing apt packages..."
 sudo apt update
-sudo apt install -y zsh bat eza ripgrep fzf zoxide btop git-delta
+sudo apt install -y zsh bat eza ripgrep fzf zoxide btop git-delta wl-clipboard
 
 # ── Fastfetch ────────────────────────────────────────────
 if ! grep -q "zhangsongcui3371" /etc/apt/sources.list.d/* 2>/dev/null; then
