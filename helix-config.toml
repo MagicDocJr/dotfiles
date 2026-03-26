@@ -1,0 +1,6 @@
+[editor]
+auto-format = true
+auto-save = false
+
+[keys.normal]
+C-s = [":format", ":write"]
