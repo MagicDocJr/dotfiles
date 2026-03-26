@@ -76,6 +76,7 @@ npm install -g typescript-language-server typescript
 npm install -g @angular/language-server
 npm install -g bash-language-server
 npm install -g vscode-langservers-extracted
+npm install -g prettier
 
 # ── Symlinks ─────────────────────────────────────────────
 echo "Creating symlinks..."
