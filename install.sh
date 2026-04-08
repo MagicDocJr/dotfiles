@@ -89,6 +89,9 @@ ln -sf "$DOTFILES/starship.toml" "$HOME/.config/starship.toml"
 [ -f "$DOTFILES/helix-config.toml" ] && ln -sf "$DOTFILES/helix-config.toml" ~/.config/helix/config.toml
 [ -f "$DOTFILES/helix-languages.toml" ] && ln -sf "$DOTFILES/helix-languages.toml" ~/.config/helix/languages.toml
 ln -sf "$DOTFILES/yazi" "$HOME/.config/yazi"
+mkdir -p ~/.claude
+ln -sf "$DOTFILES/claude/settings.json" "$HOME/.claude/settings.json"
+ln -sf "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 # ── Set zsh as default ───────────────────────────────────
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Setting zsh as default shell..."
