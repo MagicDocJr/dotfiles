@@ -1,0 +1,6 @@
+[manager]
+ratio = [1, 2, 4]
+sort-by = "natural"
+sort-sensitive = false
+sort-reverse = false
+show-hidden = false
