@@ -35,7 +35,7 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 setopt share_history
 setopt hist_ignore_dups
-
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 # ── Tools ────────────────────────────────────────────────
 eval "$(zoxide init zsh)"
 export PATH=$PATH:/snap/bin
