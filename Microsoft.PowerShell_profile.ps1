@@ -19,3 +19,6 @@ function .. { cd .. }
 function ... { cd ../.. }
 function profile { code $PROFILE }
 function starshiprc { code $env:USERPROFILE\.config\starship.toml }
+Import-Module "C:\Users\aleks\src\NorskRikstoto\beta.rikstoto.no\src\Web\.powershell\migrate-control-flow.psm1"
+
+Import-Module "C:\Users\aleks\src\NorskRikstoto\beta.rikstoto.no\src\Web\.powershell\migrate-signal-inputs.psm1"
