@@ -37,6 +37,8 @@ alias y='yazi'
 alias zshrc='helix ~/.zshrc'
 alias starshiprc='helix ~/.config/starship.toml'
 alias zj='zellij'
+alias cl='claude'
+alias clr='claude --resume'
 
 # ── Editor ───────────────────────────────────────────────
 export EDITOR='helix'

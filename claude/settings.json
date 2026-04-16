@@ -19,5 +19,6 @@
       }
     }
   },
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "model": "haiku"
 }
